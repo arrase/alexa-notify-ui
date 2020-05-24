@@ -3,6 +3,10 @@
 # abort on errors
 set -e
 
+git checkout master
+git merge develop
+git push
+
 # build
 npm run build
 
@@ -19,3 +23,4 @@ git commit -m 'deploy'
 git push -f git@github.com:arrase/alexa-notify-ui.git master:gh-pages
 
 cd -
+git checkout develop
