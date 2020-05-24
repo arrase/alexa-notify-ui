@@ -8,12 +8,12 @@
             dark
             flat
           >
-          <v-toolbar-title>Say What</v-toolbar-title>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
               <v-text-field
-                label="Message"
+                label="Mensaje"
                 name="msg"
                 id="msg"
                 type="text"
@@ -23,7 +23,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn v-on:click="send_msg" id="send_btn" color="primary">Send</v-btn>
+            <v-btn v-on:click="send_msg" id="send_btn" color="primary">Enviar</v-btn>
           </v-card-actions>
         </v-card>
         <p class="subheading font-weight-regular">
@@ -42,17 +42,23 @@
     data () {
       return {
         api_status: null,
-        msg: ''
+        msg: '',
+        title: 'Say What'
       }
     },
     mounted () {
+      const parsedUrl = new URL(window.location.href);
+      const mode = parsedUrl.searchParams.get("mode")
+      if (mode == 'door') {
+        this.title = 'No estoy en casa, deja un mensaje'
+      }
+
       axios
         .get('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/status')
         .then(response => (this.api_status = response.data))
     },
     methods: {
       send_msg() {
-        // alert(this.msg)
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios
