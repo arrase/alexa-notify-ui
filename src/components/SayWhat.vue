@@ -53,8 +53,11 @@
     methods: {
       send_msg() {
         // alert(this.msg)
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios
           .post('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/notify', { 'msg': this.msg })
+          .catch(error => (this.api_status = error))
       }
     }
   }
