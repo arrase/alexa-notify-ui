@@ -17,6 +17,7 @@
                 name="msg"
                 id="msg"
                 type="text"
+                v-model="msg"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -26,7 +27,7 @@
           </v-card-actions>
         </v-card>
         <p class="subheading font-weight-regular">
-          Say what you want.
+          API STATUS: {{ api_status }}
         </p>
       </v-col>
     </v-row>
@@ -34,7 +35,27 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
-    name: 'SayWhata'
+    name: 'SayWhata',
+    data () {
+      return {
+        api_status: null,
+        msg: ''
+      }
+    },
+    mounted () {
+      axios
+        .get('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/status')
+        .then(response => (this.api_status = response.data))
+    },
+    methods: {
+      send_msg() {
+        // alert(this.msg)
+        axios
+          .post('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/notify', { 'msg': this.msg })
+      }
+    }
   }
 </script>
