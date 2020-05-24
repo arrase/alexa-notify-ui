@@ -13,7 +13,7 @@
           <v-card-text>
             <v-form>
               <v-text-field
-                label="Mensaje"
+                :label=msg_label
                 name="msg"
                 id="msg"
                 type="text"
@@ -26,9 +26,6 @@
             <v-btn v-on:click="send_msg" id="send_btn" color="primary">Enviar</v-btn>
           </v-card-actions>
         </v-card>
-        <p class="subheading font-weight-regular">
-          API STATUS: {{ api_status }}
-        </p>
       </v-col>
     </v-row>
   </v-container>
@@ -37,30 +34,34 @@
 <script>
   import axios from 'axios'
 
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
   export default {
     name: 'SayWhata',
     data () {
       return {
         api_status: null,
         msg: '',
-        title: 'Say What'
+        title: 'Say What',
+        msg_label: 'Message'
       }
     },
     mounted () {
       const parsedUrl = new URL(window.location.href);
       const mode = parsedUrl.searchParams.get("mode")
-      if (mode == 'door') {
-        this.title = 'No estoy en casa, deja un mensaje'
-      }
 
-      axios
-        .get('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/status')
-        .then(response => (this.api_status = response.data))
+      if (mode == 'door') {
+        this.title = 'He avisado a Juan de que estás aquí'
+        this.msg_label = 'Déjale un mensaje si no está en casa'
+
+        axios
+          .post('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/notify', { 'msg': 'Hay alguien en la puerta' })
+          .catch(error => (this.api_status = error))
+      }
     },
     methods: {
       send_msg() {
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios
           .post('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/notify', { 'msg': this.msg })
           .catch(error => (this.api_status = error))
