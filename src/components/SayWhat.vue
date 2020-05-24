@@ -22,7 +22,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn id="send_btn" color="primary">Send</v-btn>
+            <v-btn v-on:click="send_msg" id="send_btn" color="primary">Send</v-btn>
           </v-card-actions>
         </v-card>
         <p class="subheading font-weight-regular">
@@ -35,6 +35,6 @@
 
 <script>
   export default {
-    name: 'SayWhat'
+    name: 'SayWhata'
   }
 </script>
