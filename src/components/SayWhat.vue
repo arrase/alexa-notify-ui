@@ -2,6 +2,14 @@
   <v-container>
     <v-row class="text-center">
       <v-col class="mb-12">
+        <v-alert
+          v-if="!isHidden"
+          type="success"
+          close-text="Close Alert"
+          dismissible
+          >
+          Mensaje enviado.
+        </v-alert>
         <v-card class="elevation-12">
           <v-toolbar
             color="primary"
@@ -43,8 +51,9 @@
       return {
         api_status: null,
         msg: '',
-        title: 'Say What',
-        msg_label: 'Message'
+        title: 'Dime algo',
+        msg_label: 'Mensaje',
+        isHidden: true
       }
     },
     mounted () {
@@ -66,6 +75,7 @@
           .post('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/notify', { 'msg': this.msg })
           .catch(error => (this.api_status = error))
         this.msg = ''
+        this.isHidden = false
       }
     }
   }
