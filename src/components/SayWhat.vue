@@ -34,8 +34,8 @@
 <script>
   import axios from 'axios'
 
-  axios.defaults.headers.post['Content-Type'] = 'application/json';
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+  axios.defaults.headers.post['Content-Type'] = 'application/json'
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 
   export default {
     name: 'SayWhata',
@@ -48,7 +48,7 @@
       }
     },
     mounted () {
-      const parsedUrl = new URL(window.location.href);
+      const parsedUrl = new URL(window.location.href)
       const mode = parsedUrl.searchParams.get("mode")
 
       if (mode == 'door') {
@@ -65,6 +65,7 @@
         axios
           .post('https://lvojx2rrq8.execute-api.eu-west-1.amazonaws.com/notify', { 'msg': this.msg })
           .catch(error => (this.api_status = error))
+        this.msg = ''
       }
     }
   }
