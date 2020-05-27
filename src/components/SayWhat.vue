@@ -1,12 +1,6 @@
 <template>
-  <v-container
-    class="fill-height"
-    fluid 
-    >
-    <v-row
-      align="center"
-      justify="center"
-      >
+  <v-container>
+    <v-row class="text-center">
       <v-col class="mb-12">
         <v-card class="elevation-12">
           <v-toolbar
