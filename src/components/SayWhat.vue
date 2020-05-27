@@ -2,14 +2,6 @@
   <v-container>
     <v-row class="text-center">
       <v-col class="mb-12">
-        <v-alert
-          v-if="!isHidden"
-          type="success"
-          close-text="Close Alert"
-          dismissible
-          >
-          Mensaje enviado.
-        </v-alert>
         <v-card class="elevation-12">
           <v-toolbar
             color="primary"
@@ -30,6 +22,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
+            <v-alert v-if="!isHidden" type="success" dense>Mensaje enviado.</v-alert>
             <v-spacer></v-spacer>
             <v-btn v-on:click="send_msg" id="send_btn" color="primary">Enviar</v-btn>
           </v-card-actions>
